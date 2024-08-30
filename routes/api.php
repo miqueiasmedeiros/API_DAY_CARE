@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DestineController;
+use App\Http\Controllers\ProdutoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,28 @@ Route::put('/clientes/{id}', [DestineController::class, 'updateCliente']);
 
 // Rota para deletar um cliente específico pelo ID
 Route::delete('/clientes/{id}', [DestineController::class, 'deleteCliente']);
+
+
+
+
+// rotas de produtos
+
+// Rota para obter todos os produtos
+Route::get('/produtos', [ProdutoController::class, 'getAllProduto']);
+
+// Rota para criar um novo produto
+Route::post('/produtos', [ProdutoController::class, 'createProduto']);
+
+// Rota para obter um produto específico pelo ID
+Route::get('/produtos/{id}', [ProdutoController::class, 'getProduto']);
+
+// Rota para atualizar um produto específico pelo ID
+Route::put('/produtos/{id}', [ProdutoController::class, 'updateProduto']);
+
+// Rota para deletar um produto específico pelo ID
+Route::delete('/produtos/{id}', [ProdutoController::class, 'deleteProduto']);
+
+
 
 // Exemplo de rota protegida com middleware de autenticação (opcional)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
