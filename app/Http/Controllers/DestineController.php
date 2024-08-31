@@ -46,6 +46,9 @@ class DestineController extends Controller
             $cadastro_clientes->email = $request->email ?? $cadastro_clientes->email;
             $cadastro_clientes->email_verified_at = $request->email_verified_at ?? $cadastro_clientes->email_verified_at;
             $cadastro_clientes->password = $request->password ? bcrypt($request->password) : $cadastro_clientes->password;
+            $cadastro_clientes->endereco = $request->endereco ?? $cadastro_clientes->endereco;
+            $cadastro_clientes->cidade = $request->cidade ?? $cadastro_clientes->cidade;
+            $cadastro_clientes->estado = $request->estado ?? $cadastro_clientes->estado;
             $cadastro_clientes->save();
   
             return response()->json([
