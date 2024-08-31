@@ -11,5 +11,16 @@ class CadastroCliente extends Model
 
     protected $table = 'cadastro_clientes'; // Certifique-se de que o nome da tabela está correto
 
-    protected $fillable = ['name', 'email', 'email_verified_at', 'password']; // Verifique o campo email_verified_at
+    protected $fillable = [
+        'name', 
+        'email',
+        'email_verified_at',
+        'password',
+        'endereco',        // Novo campo
+        'cidade',          // Novo campo
+        'estado',          // Novo campo
+    ];
+
+    // Para usar soft deletes
+    protected $dates = ['deleted_at'];
 }
