@@ -14,7 +14,8 @@ return new class extends Migration
         $cat = new \App\Models\Categoria(['categoria' => 'Geral']);
         $cat->save();
 
-
+        $prod = new \App\Models\Produto(['nome'=>'produto 1','valor'=> 10,'foto'=>'images/produto1.jpg','descricao'=>'','categoria_id'=>$cat->id]);
+        $prod->save();
     }
 
     /**

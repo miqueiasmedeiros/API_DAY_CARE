@@ -15,6 +15,7 @@ return new class extends Migration
         $table->increments("id");
         $table->string("nome", 100);
         $table->decimal("valor", 10, 2);
+        $table->string('foto')->nullable();
         $table->text("descricao")->nullable();  // Removido o argumento de tamanho
         $table->unsignedInteger("categoria_id");  // Forma alternativa para garantir que é unsigned
         $table->timestamps();
