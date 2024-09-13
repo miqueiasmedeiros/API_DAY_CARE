@@ -33,17 +33,19 @@ use App\Http\Controllers\EnderecoController;
 // Rota para deletar um cliente específico pelo ID
 //Route::delete('/clientes/{id}', [DestineController::class, 'deleteCliente']);
 
+// Rota para gerar o token
+Route::post('/login', [UsuarioController::class, 'generateToken']); 
 
-//rotas de usuarios
-Route::get('/usuarios', [UsuarioController::class, 'getAllUsuarios']);          // Retorna todos os usuários
+// Rotas protegidas
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/usuarios', [UsuarioController::class, 'getAllUsuarios']);
+    Route::get('/usuarios/{id}', [UsuarioController::class, 'getUsuario']);
+    Route::put('/usuarios/{id}', [UsuarioController::class, 'updateUsuario']);
+    Route::delete('/usuarios/{id}', [UsuarioController::class, 'deleteUsuario']);
+});
 
-Route::post('/usuarios', [UsuarioController::class, 'createUsuario']);           // Cria um novo usuário
-
-Route::get('/usuarios/{id}', [UsuarioController::class, 'getUsuario']);          // Retorna um usuário específico pelo ID
-
-Route::put('/usuarios/{id}', [UsuarioController::class, 'updateUsuario']);       // Atualiza os dados de um usuário específico
-
-Route::delete('/usuarios/{id}', [UsuarioController::class, 'deleteUsuario']);    // Deleta um usuario pelo id
+// Rotas públicas
+Route::post('/usuarios', [UsuarioController::class, 'createUsuario']);
 
 
 // Rotas de endereços

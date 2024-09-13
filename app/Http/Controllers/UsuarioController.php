@@ -6,6 +6,9 @@ use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class UsuarioController extends Controller
 {
@@ -118,8 +121,6 @@ class UsuarioController extends Controller
             ], 500);
         }
     }
-    
-
 
     // Deleta um usuário
     public function deleteUsuario($id)
@@ -146,6 +147,74 @@ class UsuarioController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'An error occurred while deleting the user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Gera um token para o usuário
+    public function generateToken(Request $request)
+    {
+        try {
+            $request->validate([
+                'login' => 'required|string',
+                'password' => 'required|string',
+            ]);
+
+            $user = Usuarios::where('login', $request->login)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return response()->json([
+                    'message' => 'Invalid credentials'
+                ], 401);
+            }
+
+            $token = $user->createToken('Personal Access Token')->plainTextToken;
+
+            return response()->json([
+                'token' => $token
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $e->errors()
+            ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while generating the token',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // Revoga o token do usuário
+    public function revokeToken(Request $request)
+    {
+        try {
+            $request->validate([
+                'token' => 'required|string',
+            ]);
+
+            $token = PersonalAccessToken::findToken($request->token);
+
+            if ($token) {
+                $token->delete();
+                return response()->json([
+                    'message' => 'Token revoked successfully'
+                ], 200);
+            }
+
+            return response()->json([
+                'message' => 'Token not found'
+            ], 404);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $e->errors()
+            ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while revoking the token',
                 'error' => $e->getMessage()
             ], 500);
         }
