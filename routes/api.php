@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DestineController;
 use App\Http\Controllers\ProdutoController;
-
+use App\Http\Controllers\CategoriaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -50,6 +50,23 @@ Route::put('/produtos/{id}', [ProdutoController::class, 'updateProduto']);
 
 // Rota para deletar um produto específico pelo ID
 Route::delete('/produtos/{id}', [ProdutoController::class, 'deleteProduto']);
+
+
+
+// Rota para obter todas as categorias
+Route::get('/categorias', [CategoriaController::class, 'getAllCategorias']);
+
+// Rota para criar uma nova categoria
+Route::post('/categorias', [CategoriaController::class, 'createCategoria']);
+
+// Rota para obter uma categoria específica pelo ID
+Route::get('/categorias/{id}', [CategoriaController::class, 'getCategoria']);
+
+// Rota para atualizar uma categoria específica pelo ID
+Route::put('/categorias/{id}', [CategoriaController::class, 'updateCategoria']);
+
+// Rota para deletar uma categoria específica pelo ID
+Route::delete('/categorias/{id}', [CategoriaController::class, 'deleteCategoria']);
 
 
 
