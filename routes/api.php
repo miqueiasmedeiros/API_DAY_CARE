@@ -2,9 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DestineController;
+//use App\Http\Controllers\DestineController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\EnderecoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,20 +19,43 @@ use App\Http\Controllers\CategoriaController;
 */
 
 // Rota para obter todos os clientes
-Route::get('/clientes', [DestineController::class, 'getAllCliente']);
+//Route::get('/clientes', [DestineController::class, 'getAllCliente']);
 
 // Rota para criar um novo cliente
-Route::post('/clientes', [DestineController::class, 'createCliente']);
+//Route::post('/clientes', [DestineController::class, 'createCliente']);
 
 // Rota para obter um cliente específico pelo ID
-Route::get('/clientes/{id}', [DestineController::class, 'getCliente']);
+//Route::get('/clientes/{id}', [DestineController::class, 'getCliente']);
 
 // Rota para atualizar um cliente específico pelo ID
-Route::put('/clientes/{id}', [DestineController::class, 'updateCliente']);
+//Route::put('/clientes/{id}', [DestineController::class, 'updateCliente']);
 
 // Rota para deletar um cliente específico pelo ID
-Route::delete('/clientes/{id}', [DestineController::class, 'deleteCliente']);
+//Route::delete('/clientes/{id}', [DestineController::class, 'deleteCliente']);
 
+
+//rotas de usuarios
+Route::get('/usuarios', [UsuarioController::class, 'getAllUsuarios']);          // Retorna todos os usuários
+
+Route::post('/usuarios', [UsuarioController::class, 'createUsuario']);           // Cria um novo usuário
+
+Route::get('/usuarios/{id}', [UsuarioController::class, 'getUsuario']);          // Retorna um usuário específico pelo ID
+
+Route::put('/usuarios/{id}', [UsuarioController::class, 'updateUsuario']);       // Atualiza os dados de um usuário específico
+
+Route::delete('/usuarios/{id}', [UsuarioController::class, 'deleteUsuario']);    // Deleta um usuario pelo id
+
+
+// Rotas de endereços
+Route::get('/enderecos', [EnderecoController::class, 'getAllEnderecos']);          // Retorna todos os endereços
+
+Route::post('/enderecos', [EnderecoController::class, 'createEndereco']);           // Cria um novo endereço
+
+Route::get('/enderecos/{id}', [EnderecoController::class, 'getEndereco']);          // Retorna um endereço específico pelo ID
+
+Route::put('/enderecos/{id}', [EnderecoController::class, 'updateEndereco']);       // Atualiza os dados de um endereço específico
+
+Route::delete('/enderecos/{id}', [EnderecoController::class, 'deleteEndereco']);    // Deleta um endereço pelo ID
 
 
 
