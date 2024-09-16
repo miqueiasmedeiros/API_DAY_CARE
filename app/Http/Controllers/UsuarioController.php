@@ -172,7 +172,8 @@ class UsuarioController extends Controller
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
             return response()->json([
-                'token' => $token
+                'token' => $token,
+                'login' => $request->login,
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
