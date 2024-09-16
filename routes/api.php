@@ -7,6 +7,8 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\ItemPedidoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -94,6 +96,31 @@ Route::put('/categorias/{id}', [CategoriaController::class, 'updateCategoria']);
 
 // Rota para deletar uma categoria específica pelo ID
 Route::delete('/categorias/{id}', [CategoriaController::class, 'deleteCategoria']);
+
+
+
+
+
+Route::get('/pedidos', [PedidoController::class, 'getAllPedidos']);
+
+Route::post('/pedidos', [PedidoController::class, 'createPedido']);
+
+Route::get('/pedidos/{id}', [PedidoController::class, 'getPedido']);
+
+Route::put('/pedidos/{id}', [PedidoController::class, 'updatePedido']);
+
+Route::delete('/pedidos/{id}', [PedidoController::class, 'deletePedido']);
+
+
+
+
+
+Route::get('/itens-pedidos', [ItemPedidoController::class, 'getAllItensPedido']);
+Route::post('/itens-pedidos', [ItemPedidoController::class, 'createItemPedido']);
+Route::get('/itens-pedidos/{id}', [ItemPedidoController::class, 'getItemPedido']);
+Route::put('/itens-pedidos/{id}', [ItemPedidoController::class, 'updateItemPedido']);
+Route::delete('/itens-pedidos/{id}', [ItemPedidoController::class, 'deleteItemPedido']);
+Route::get('/pedido/atual/{usuarioId}', [ItemPedidoController::class, 'getCurrentPedidoWithItems']);
 
 
 

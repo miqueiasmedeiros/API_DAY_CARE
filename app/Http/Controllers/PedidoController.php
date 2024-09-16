@@ -2,35 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produto;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
-class ProdutoController extends Controller
+class PedidoController extends Controller
 {
-    // Método para obter todos os produtos
-    public function getAllProduto()
+    // Método para obter todos os pedidos
+    public function getAllPedidos()
     {
-        $produtos = Produto::all();
-        return response()->json($produtos, 200);
+        $pedidos = Pedido::all();
+        return response()->json($pedidos, 200);
     }
 
-    // Método para criar um novo produto
-    public function createProduto(Request $request)
+    // Método para criar um novo pedido
+    public function createPedido(Request $request)
     {
         try {
             $request->validate([
-                'nome' => 'required|string|max:255',
-                'valor' => 'required|numeric', // Atualizado de 'preco' para 'valor'
-                'foto' => 'nullable|string',
-                'descricao' => 'nullable|string',
-                'categoria_id' => 'required|integer|exists:categorias,id' // Certifique-se de que 'categorias' é uma tabela válida
+                'datapedido' => 'required|date',
+                'status' => 'required|string|max:4',
+                'usuario_id' => 'required|integer|exists:usuarios,id',
             ]);
 
-            $produto = Produto::create($request->all());
+            $pedido = Pedido::create($request->all());
 
-            return response()->json($produto, 201);
+            return response()->json($pedido, 201);
         } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'Validation Error',
@@ -38,14 +36,14 @@ class ProdutoController extends Controller
             ], 400);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while creating the product',
+                'message' => 'An error occurred while creating the order',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    // Método para obter um produto específico pelo ID
-    public function getProduto($id)
+    // Método para obter um pedido específico pelo ID
+    public function getPedido($id)
     {
         try {
             if (!is_numeric($id)) {
@@ -54,23 +52,23 @@ class ProdutoController extends Controller
                 ], 400);
             }
 
-            $produto = Produto::findOrFail($id);
+            $pedido = Pedido::findOrFail($id);
 
-            return response()->json($produto, 200);
+            return response()->json($pedido, 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'message' => 'Product not found'
+                'message' => 'Order not found'
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while retrieving the product',
+                'message' => 'An error occurred while retrieving the order',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    // Método para atualizar um produto específico pelo ID
-    public function updateProduto(Request $request, $id)
+    // Método para atualizar um pedido específico pelo ID
+    public function updatePedido(Request $request, $id)
     {
         try {
             if (!is_numeric($id)) {
@@ -80,17 +78,15 @@ class ProdutoController extends Controller
             }
 
             $request->validate([
-                'nome' => 'string|max:255',
-                'valor' => 'numeric', // Atualizado de 'preco' para 'valor'
-                'foto' => 'nullable|string',
-                'descricao' => 'nullable|string',
-                'categoria_id' => 'integer|exists:categorias,id'
+                'datapedido' => 'date',
+                'status' => 'string|max:4',
+                'usuario_id' => 'integer|exists:usuarios,id',
             ]);
 
-            $produto = Produto::findOrFail($id);
-            $produto->update($request->all());
+            $pedido = Pedido::findOrFail($id);
+            $pedido->update($request->all());
 
-            return response()->json($produto, 200);
+            return response()->json($pedido, 200);
         } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'Validation Error',
@@ -98,18 +94,18 @@ class ProdutoController extends Controller
             ], 400);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'message' => 'Product not found'
+                'message' => 'Order not found'
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while updating the product',
+                'message' => 'An error occurred while updating the order',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    // Método para deletar um produto específico pelo ID
-    public function deleteProduto($id)
+    // Método para deletar um pedido específico pelo ID
+    public function deletePedido($id)
     {
         try {
             if (!is_numeric($id)) {
@@ -118,19 +114,19 @@ class ProdutoController extends Controller
                 ], 400);
             }
 
-            $produto = Produto::findOrFail($id);
-            $produto->delete();
+            $pedido = Pedido::findOrFail($id);
+            $pedido->delete();
 
             return response()->json([
-                'message' => 'Product successfully deleted'
+                'message' => 'Order successfully deleted'
             ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'message' => 'Product not found'
+                'message' => 'Order not found'
             ], 404);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while deleting the product',
+                'message' => 'An error occurred while deleting the order',
                 'error' => $e->getMessage()
             ], 500);
         }
